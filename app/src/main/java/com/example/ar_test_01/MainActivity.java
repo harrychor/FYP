@@ -160,10 +160,6 @@ public class MainActivity extends AppCompatActivity implements Scene.OnUpdateLis
                     AR_Node node = new AR_Node(this, R.raw.halo);
                     node.setImage(image);
                     arView.getScene().addChild(node);
-                }else{
-                    AR_Node node = null;
-                    arView.getScene().onRemoveChild(node.getParent());
-                    node.setRenderable(null);
                 }
             }
         }
