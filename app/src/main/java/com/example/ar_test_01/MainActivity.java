@@ -25,6 +25,7 @@ import com.google.ar.core.exceptions.UnavailableSdkTooOldException;
 import com.google.ar.sceneform.ArSceneView;
 import com.google.ar.sceneform.FrameTime;
 import com.google.ar.sceneform.Scene;
+import com.google.ar.sceneform.rendering.ViewRenderable;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -165,7 +166,7 @@ public class MainActivity extends AppCompatActivity implements Scene.OnUpdateLis
                 case PAUSED:
                     // When an image is in PAUSED state, but the camera is not PAUSED, it has been detected,
                     // but not yet tracked.
-                    String text = "Detected Image ";
+                    String text = "Detected Image "+image.getName();
                     SnackbarHelper.getInstance().showMessage(this, text);
                     break;
                 case TRACKING:
@@ -176,12 +177,21 @@ public class MainActivity extends AppCompatActivity implements Scene.OnUpdateLis
                     node.setImage(image);
                     augmentedImageMap.put(image, node);
                     arView.getScene().addChild(node);
+                    show_text();
                     view.setVisibility(View.INVISIBLE);
                 } else if (image.getName().equals("ball.jpg")) {
                     AR_Node node = new AR_Node(this, R.raw.ball);
                     node.setImage(image);
                     augmentedImageMap.put(image, node);
                     arView.getScene().addChild(node);
+                    show_text();
+                    view.setVisibility(View.INVISIBLE);
+                } else if (image.getName().equals("controller.jpg")) {
+                    AR_Node node = new AR_Node(this, R.raw.controller);
+                    node.setImage(image);
+                    augmentedImageMap.put(image, node);
+                    arView.getScene().addChild(node);
+                    show_text();
                     view.setVisibility(View.INVISIBLE);
                 }
                 case STOPPED:
@@ -220,8 +230,10 @@ public class MainActivity extends AppCompatActivity implements Scene.OnUpdateLis
         }
     }
 
-    private void setBackground(int id){
-
+    private void show_text(){
+        ViewRenderable.builder()
+                .setView(this, R.layout.show_text)
+                .build();
     }
 
 

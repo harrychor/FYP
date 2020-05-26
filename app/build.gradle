@@ -44,12 +44,24 @@ dependencies {
     // Alternatively, use ArSceneView without the UX dependency.
     implementation 'com.google.ar.sceneform:core:1.15.0'
     implementation 'com.karumi:dexter:5.0.0'
-/*
-    apply plugin: 'com.google.ar.sceneform.plugin'
-
-    sceneform.asset('sampledata/ball.fbx', // 'Source Asset Path' specified during import.
-            'default',                    // 'Material Path' specified during import.
-           'sampledata/ball.sfa', // '.sfa Output Path' specified during import.
-          'src/main/res/raw/ball')      // '.sfb Output Path' specified during import.
-*/
 }
+
+
+apply plugin: 'com.google.ar.sceneform.plugin'
+
+sceneform.asset('sampledata/controller.obj', // 'Source Asset Path' specified during import.
+        'default',                    // 'Material Path' specified during import.
+        'sampledata/controller.sfa', // '.sfa Output Path' specified during import.
+        'src/main/res/raw/controller')      // '.sfb Output Path' specified during import.
+
+sceneform.asset('sampledata/ball.fbx', // 'Source Asset Path' specified during import.
+        'default',                    // 'Material Path' specified during import.
+        'sampledata/ball.sfa', // '.sfa Output Path' specified during import.
+        'src/main/res/raw/ball')      // '.sfb Output Path' specified during import.
+
+sceneform.asset('sampledata/halo.obj', // 'Source Asset Path' specified during import.
+        'default',                    // 'Material Path' specified during import.
+        'sampledata/halo.sfa', // '.sfa Output Path' specified during import.
+        'src/main/res/raw/halo')      // '.sfb Output Path' specified during import.
+
+
