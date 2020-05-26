@@ -49,10 +49,6 @@ dependencies {
 
 apply plugin: 'com.google.ar.sceneform.plugin'
 
-sceneform.asset('sampledata/controller.obj', // 'Source Asset Path' specified during import.
-        'default',                    // 'Material Path' specified during import.
-        'sampledata/controller.sfa', // '.sfa Output Path' specified during import.
-        'src/main/res/raw/controller')      // '.sfb Output Path' specified during import.
 
 sceneform.asset('sampledata/ball.fbx', // 'Source Asset Path' specified during import.
         'default',                    // 'Material Path' specified during import.

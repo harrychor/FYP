@@ -26,6 +26,8 @@ import com.google.ar.sceneform.ArSceneView;
 import com.google.ar.sceneform.FrameTime;
 import com.google.ar.sceneform.Scene;
 import com.google.ar.sceneform.rendering.ViewRenderable;
+import com.google.ar.sceneform.ux.ArFragment;
+import com.google.ar.sceneform.ux.TransformableNode;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -40,20 +42,23 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements Scene.OnUpdateListener{
-    private ArSceneView arView;
+    private ArFragment arView;
     private Config config;
     private Session session;
     private boolean shouldConfigureSession=false;
     private final Map<AugmentedImage, AR_Node> augmentedImageMap = new HashMap<>();
     private Switch focusModeSwitch;
 
+    ViewRenderable show_name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //for view
-        arView = (ArSceneView)findViewById(R.id.arView);
-        arView.getPlaneRenderer().setEnabled(false);
+        arView =  (ArFragment) getSupportFragmentManager().findFragmentById(R.id.arView);
+        arView.getPlaneDiscoveryController().hide();
+        arView.getPlaneDiscoveryController().setInstructionView(null);
+        arView.getArSceneView().getPlaneRenderer().setEnabled(false);
 
         //request permission
         Dexter.withActivity(this).withPermission(Manifest.permission.CAMERA)
@@ -82,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements Scene.OnUpdateLis
 
 
     private void initSceneView() {
-        arView.getScene().addOnUpdateListener(this::onUpdate);
+        arView.getArSceneView().getScene().addOnUpdateListener(this::onUpdate);
     }
 
     private void setupSession() {
@@ -103,11 +108,11 @@ public class MainActivity extends AppCompatActivity implements Scene.OnUpdateLis
         if(shouldConfigureSession){
             configSession();
             shouldConfigureSession=false;
-            arView.setupSession(session);
+            arView.getArSceneView().setupSession(session);
         }
         try {
             session.resume();
-            arView.resume();
+            arView.getArSceneView().resume();
         } catch (CameraNotAvailableException e) {
             e.printStackTrace();
             session = null;
@@ -155,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements Scene.OnUpdateLis
 
     @Override
     public void onUpdate(FrameTime frameTime){
-        Frame frame = arView.getArFrame();
+        Frame frame = arView.getArSceneView().getArFrame();
         final ImageView view = findViewById(R.id.image_view_fit_to_scan);
         if (frame == null) {
             return;
@@ -176,21 +181,14 @@ public class MainActivity extends AppCompatActivity implements Scene.OnUpdateLis
                     AR_Node node = new AR_Node(this, R.raw.halo);
                     node.setImage(image);
                     augmentedImageMap.put(image, node);
-                    arView.getScene().addChild(node);
+                    arView.getArSceneView().getScene().addChild(node);
                     show_text();
                     view.setVisibility(View.INVISIBLE);
                 } else if (image.getName().equals("ball.jpg")) {
                     AR_Node node = new AR_Node(this, R.raw.ball);
                     node.setImage(image);
                     augmentedImageMap.put(image, node);
-                    arView.getScene().addChild(node);
-                    show_text();
-                    view.setVisibility(View.INVISIBLE);
-                } else if (image.getName().equals("controller.jpg")) {
-                    AR_Node node = new AR_Node(this, R.raw.controller);
-                    node.setImage(image);
-                    augmentedImageMap.put(image, node);
-                    arView.getScene().addChild(node);
+                    arView.getArSceneView().getScene().addChild(node);
                     show_text();
                     view.setVisibility(View.INVISIBLE);
                 }
@@ -202,10 +200,7 @@ public class MainActivity extends AppCompatActivity implements Scene.OnUpdateLis
 
             /*
             if(image.getTrackingState() == TrackingState.TRACKING) {
-                if (image.getName().equals("phone.jpg")) {
-                    AR_Node node = new AR_Node(this, R.raw.phone);
-                    node.setImage(image);
-                    arView.getScene().addChild(node);
+
 
                 } else if (image.getName().equals("halo.jpg")) {
                     AR_Node node = new AR_Node(this, R.raw.halo);
@@ -233,7 +228,12 @@ public class MainActivity extends AppCompatActivity implements Scene.OnUpdateLis
     private void show_text(){
         ViewRenderable.builder()
                 .setView(this, R.layout.show_text)
-                .build();
+                .build()
+                .thenAccept(renderable -> show_name = renderable)
+        ;
+
+
+
     }
 
 
@@ -267,7 +267,7 @@ public class MainActivity extends AppCompatActivity implements Scene.OnUpdateLis
     protected void onPause() {
         super.onPause();
         if(session != null){
-            arView.pause();
+            arView.getArSceneView().pause();
             session.pause();
         }
     }
