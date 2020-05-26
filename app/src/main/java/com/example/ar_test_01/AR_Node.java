@@ -32,7 +32,7 @@ public class AR_Node extends AnchorNode {
     }
 
 
-
+    @SuppressWarnings({"AndroidApiChecker", "FutureReturnValueIgnored"})
     public void setImage(final AugmentedImage image) {
         this.image = image;
         if (!modelRenderableCompletableFuture.isDone()) {
@@ -42,18 +42,16 @@ public class AR_Node extends AnchorNode {
                     })
                     .exceptionally(throwable -> null);
         }
-
-
         setAnchor(image.createAnchor(image.getCenterPose()));
 
         Node node = new Node();
-        //Vector3 localPosition = new Vector3(0.0f,0.0f,0.0f);
+        Vector3 localPosition = new Vector3(0.0f, 0.0f, 0.0f);
 
         Pose pose = Pose.makeTranslation(0.0f, 0.0f, 0.0f);
 
         node.setParent(this);
-        node.setLocalPosition(new Vector3(pose.tx(), pose.ty(), pose.tz()));
-        node.setLocalScale(new Vector3(0.1f,0.1f,0.1f));
+        node.setLocalPosition(localPosition);
+        //node.setLocalScale(new Vector3(0.1f,0.1f,0.1f));
         node.setLocalRotation(new Quaternion(pose.qx(),pose.qy(),pose.qz(),pose.qw()));
         node.setRenderable(modelRenderableCompletableFuture.getNow(null));
 
@@ -63,8 +61,6 @@ public class AR_Node extends AnchorNode {
         //node.setParent(this);
         //node.setLocalPosition(localPosition);
         //node.setLocalScale(new Vector3(0.01f,0.01f,0.01f));
-
-
 
     }
 

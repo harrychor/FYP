@@ -6,6 +6,8 @@ import android.Manifest;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -33,14 +35,15 @@ import com.karumi.dexter.listener.single.PermissionListener;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements Scene.OnUpdateListener{
-
     private ArSceneView arView;
     private Config config;
     private Session session;
     private boolean shouldConfigureSession=false;
-
+    private final Map<AugmentedImage, AR_Node> augmentedImageMap = new HashMap<>();
     private Switch focusModeSwitch;
 
     @Override
@@ -49,6 +52,8 @@ public class MainActivity extends AppCompatActivity implements Scene.OnUpdateLis
         setContentView(R.layout.activity_main);
         //for view
         arView = (ArSceneView)findViewById(R.id.arView);
+        arView.getPlaneRenderer().setEnabled(false);
+
         //request permission
         Dexter.withActivity(this).withPermission(Manifest.permission.CAMERA)
                 .withListener(new PermissionListener() {
@@ -67,11 +72,16 @@ public class MainActivity extends AppCompatActivity implements Scene.OnUpdateLis
 
                     }
                 }).check();
+
+
+
         initSceneView();
     }
 
+
+
     private void initSceneView() {
-        arView.getScene().addOnUpdateListener(this);
+        arView.getScene().addOnUpdateListener(this::onUpdate);
     }
 
     private void setupSession() {
@@ -142,32 +152,86 @@ public class MainActivity extends AppCompatActivity implements Scene.OnUpdateLis
     }
 
 
-
-
     @Override
     public void onUpdate(FrameTime frameTime){
         Frame frame = arView.getArFrame();
-        assert frame != null;
+        final ImageView view = findViewById(R.id.image_view_fit_to_scan);
+        if (frame == null) {
+            return;
+        }
         Collection<AugmentedImage> updateAugmentedImg = frame.getUpdatedTrackables(AugmentedImage.class);
-
         for (AugmentedImage image:updateAugmentedImg){
-            if(image.getTrackingState() == TrackingState.TRACKING){
-                if(image.getName().equals("phone.jpg")){
-                    AR_Node node = new AR_Node(this,R.raw.phone);
+            switch (image.getTrackingState()) {
+                case PAUSED:
+                    // When an image is in PAUSED state, but the camera is not PAUSED, it has been detected,
+                    // but not yet tracked.
+                    String text = "Detected Image ";
+                    SnackbarHelper.getInstance().showMessage(this, text);
+                    break;
+                case TRACKING:
+                    // Have to switch to UI Thread to update View.
+                    view.setVisibility(View.GONE);
+                if (image.getName().equals("halo.jpg")) {
+                    AR_Node node = new AR_Node(this, R.raw.halo);
+                    node.setImage(image);
+                    augmentedImageMap.put(image, node);
+                    arView.getScene().addChild(node);
+                    view.setVisibility(View.INVISIBLE);
+                } else if (image.getName().equals("ball.jpg")) {
+                    AR_Node node = new AR_Node(this, R.raw.ball);
+                    node.setImage(image);
+                    augmentedImageMap.put(image, node);
+                    arView.getScene().addChild(node);
+                    view.setVisibility(View.INVISIBLE);
+                }
+                case STOPPED:
+                    augmentedImageMap.remove(image);
+                    break;
+            }
+
+
+            /*
+            if(image.getTrackingState() == TrackingState.TRACKING) {
+                if (image.getName().equals("phone.jpg")) {
+                    AR_Node node = new AR_Node(this, R.raw.phone);
                     node.setImage(image);
                     arView.getScene().addChild(node);
-                } else if(image.getName().equals("halo.jpg")) {
+
+                } else if (image.getName().equals("halo.jpg")) {
                     AR_Node node = new AR_Node(this, R.raw.halo);
                     node.setImage(image);
                     arView.getScene().addChild(node);
+                    view.setVisibility(View.INVISIBLE);
+                    String text = "Detected Image ";
+                    SnackbarHelper.getInstance().showMessage(this, text);
+                } else if (image.getName().equals("ball.jpg")) {
+                    AR_Node node = new AR_Node(this, R.raw.ball);
+                    node.setImage(image);
+                    arView.getScene().addChild(node);
+                    view.setVisibility(View.INVISIBLE);
+                    String text = "Detected Image ";
+                    SnackbarHelper.getInstance().showMessage(this, text);
+                } else {
+                    //view.setVisibility(View.VISIBLE);
                 }
             }
+
+             */
         }
     }
+
+    private void setBackground(int id){
+
+    }
+
 
     @Override
     protected void onResume(){
         super.onResume();
+        final ImageView view = findViewById(R.id.image_view_fit_to_scan);
+        if (augmentedImageMap.isEmpty()) {
+            view.setVisibility(View.VISIBLE);
+        }
         Dexter.withActivity(this).withPermission(Manifest.permission.CAMERA)
                 .withListener(new PermissionListener() {
                     @Override
