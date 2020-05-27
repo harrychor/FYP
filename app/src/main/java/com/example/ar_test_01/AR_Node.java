@@ -67,7 +67,7 @@ public class AR_Node extends AnchorNode {
 
         node.setParent(this);
         node.setLocalPosition(localPosition);
-        node.setLocalScale(new Vector3(0.1f,0.1f,0.1f));
+       // node.setLocalScale(new Vector3(0.1f,0.1f,0.1f));
         //node.setLocalScale(new Vector3(imageWidth,((imageWidth+imageHeight)/2),imageHeight));
         node.setLocalRotation(new Quaternion(pose.qx(),pose.qy(),pose.qz(),pose.qw()));
         node.setRenderable(modelRenderableCompletableFuture.getNow(null));

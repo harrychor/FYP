@@ -208,6 +208,7 @@ public class MainActivity extends AppCompatActivity implements Scene.OnUpdateLis
                     if (image.getName().equals("halo.jpg")) {
                         AR_Node node = new AR_Node(this, R.raw.halo);
                         node.setImage(image);
+                        node.setLocalScale(new Vector3(0.1f,0.1f,0.1f));
                         augmentedImageMap.put(image, node);
                         arView.getArSceneView().getScene().addChild(node);
                         //show_text();
@@ -223,6 +224,7 @@ public class MainActivity extends AppCompatActivity implements Scene.OnUpdateLis
                                 }
                                 node.resetModel();
                                 Intent intent = new Intent();
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 intent.setClass(MainActivity.this, StartActivity.class);
                                 finish();
                                 startActivity(intent);
@@ -232,6 +234,7 @@ public class MainActivity extends AppCompatActivity implements Scene.OnUpdateLis
                     } else if (image.getName().equals("ball.jpg")) {
                         AR_Node node = new AR_Node(this, R.raw.ball);
                         node.setImage(image);
+                        node.setLocalScale(new Vector3(1f,1f,1f));
                         augmentedImageMap.put(image, node);
                         arView.getArSceneView().getScene().addChild(node);
                         //show_text();
@@ -247,6 +250,7 @@ public class MainActivity extends AppCompatActivity implements Scene.OnUpdateLis
                                 }
                                 node.resetModel();
                                 Intent intent = new Intent();
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 intent.setClass(MainActivity.this, StartActivity.class);
                                 finish();
                                 startActivity(intent);
@@ -256,6 +260,7 @@ public class MainActivity extends AppCompatActivity implements Scene.OnUpdateLis
                     }else if (image.getName().equals("phone.jpg")) {
                         AR_Node node = new AR_Node(this, R.raw.mobile_phone);
                         node.setImage(image);
+                        node.setLocalScale(new Vector3(0.01f,0.01f,0.01f));
                         augmentedImageMap.put(image, node);
                         arView.getArSceneView().getScene().addChild(node);
                         //show_text();
@@ -271,6 +276,7 @@ public class MainActivity extends AppCompatActivity implements Scene.OnUpdateLis
                                 }
                                 node.resetModel();
                                 Intent intent = new Intent();
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 intent.setClass(MainActivity.this, StartActivity.class);
                                 finish();
                                 startActivity(intent);
