@@ -3,6 +3,9 @@ package com.example.ar_test_01;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -223,11 +226,7 @@ public class MainActivity extends AppCompatActivity implements Scene.OnUpdateLis
                                     augmentedImageMap.remove(image);
                                 }
                                 node.resetModel();
-                                Intent intent = new Intent();
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                intent.setClass(MainActivity.this, StartActivity.class);
-                                finish();
-                                startActivity(intent);
+                                restart();
                             }
 
                         });
@@ -249,11 +248,7 @@ public class MainActivity extends AppCompatActivity implements Scene.OnUpdateLis
                                     augmentedImageMap.remove(image);
                                 }
                                 node.resetModel();
-                                Intent intent = new Intent();
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                intent.setClass(MainActivity.this, StartActivity.class);
-                                finish();
-                                startActivity(intent);
+                                restart();
                             }
 
                         });
@@ -275,11 +270,7 @@ public class MainActivity extends AppCompatActivity implements Scene.OnUpdateLis
                                     augmentedImageMap.remove(image);
                                 }
                                 node.resetModel();
-                                Intent intent = new Intent();
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                intent.setClass(MainActivity.this, StartActivity.class);
-                                finish();
-                                startActivity(intent);
+                                restart();
                             }
 
                         });
@@ -377,7 +368,22 @@ public class MainActivity extends AppCompatActivity implements Scene.OnUpdateLis
         }
     }
 
+    public  void restart(){
+        Intent mStartActivity = new Intent(MainActivity.this, StartActivity.class);
+        int mPendingIntentId = 123456;
+        PendingIntent mPendingIntent = PendingIntent.getActivity(MainActivity.this, mPendingIntentId, mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
+        AlarmManager mgr = (AlarmManager)MainActivity.this.getSystemService(Context.ALARM_SERVICE);
+        mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
+        System.exit(0);
+        /*
+        Intent intent = new Intent();
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setClass(MainActivity.this, StartActivity.class);
+        finish();
+        startActivity(intent);
 
+         */
+    }
 
 
 
