@@ -55,9 +55,13 @@ sceneform.asset('sampledata/ball.fbx', // 'Source Asset Path' specified during i
         'sampledata/ball.sfa', // '.sfa Output Path' specified during import.
         'src/main/res/raw/ball')      // '.sfb Output Path' specified during import.
 
-sceneform.asset('sampledata/halo.obj', // 'Source Asset Path' specified during import.
+sceneform.asset('sampledata/halo.fbx', // 'Source Asset Path' specified during import.
         'default',                    // 'Material Path' specified during import.
         'sampledata/halo.sfa', // '.sfa Output Path' specified during import.
         'src/main/res/raw/halo')      // '.sfb Output Path' specified during import.
 
+sceneform.asset('sampledata/mobile-phone.obj', // 'Source Asset Path' specified during import.
+        'default',                    // 'Material Path' specified during import.
+        'sampledata/mobile-phone.sfa', // '.sfa Output Path' specified during import.
+        'src/main/res/raw/mobile_phone')      // '.sfb Output Path' specified during import.
 

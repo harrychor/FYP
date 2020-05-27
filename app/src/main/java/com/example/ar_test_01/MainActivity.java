@@ -3,14 +3,17 @@ package com.example.ar_test_01;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.ar.core.AugmentedImage;
 import com.google.ar.core.AugmentedImageDatabase;
 import com.google.ar.core.Config;
@@ -22,9 +25,11 @@ import com.google.ar.core.exceptions.UnavailableApkTooOldException;
 import com.google.ar.core.exceptions.UnavailableArcoreNotInstalledException;
 import com.google.ar.core.exceptions.UnavailableDeviceNotCompatibleException;
 import com.google.ar.core.exceptions.UnavailableSdkTooOldException;
+import com.google.ar.sceneform.AnchorNode;
 import com.google.ar.sceneform.ArSceneView;
 import com.google.ar.sceneform.FrameTime;
 import com.google.ar.sceneform.Scene;
+import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.ViewRenderable;
 import com.google.ar.sceneform.ux.ArFragment;
 import com.google.ar.sceneform.ux.TransformableNode;
@@ -40,25 +45,51 @@ import java.io.InputStream;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity implements Scene.OnUpdateListener{
     private ArFragment arView;
     private Config config;
     private Session session;
+    private FloatingActionButton Delete;
     private boolean shouldConfigureSession=false;
     private final Map<AugmentedImage, AR_Node> augmentedImageMap = new HashMap<>();
     private Switch focusModeSwitch;
 
-    ViewRenderable show_name;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        AR_Node node = null;
         //for view
         arView =  (ArFragment) getSupportFragmentManager().findFragmentById(R.id.arView);
         arView.getPlaneDiscoveryController().hide();
         arView.getPlaneDiscoveryController().setInstructionView(null);
         arView.getArSceneView().getPlaneRenderer().setEnabled(false);
+        Delete = (FloatingActionButton)findViewById(R.id.floatingActionButton);
+/*
+        Delete = (FloatingActionButton)findViewById(R.id.floatingActionButton);
+        Delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                arView.getArSceneView().getScene().onRemoveChild(node);
+            }
+        });
+
+
+
+ */
+        Delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this, StartActivity.class);
+                startActivity(intent);
+                finish();
+            };
+        });
 
         //request permission
         Dexter.withActivity(this).withPermission(Manifest.permission.CAMERA)
@@ -78,9 +109,6 @@ public class MainActivity extends AppCompatActivity implements Scene.OnUpdateLis
 
                     }
                 }).check();
-
-
-
         initSceneView();
     }
 
@@ -177,24 +205,86 @@ public class MainActivity extends AppCompatActivity implements Scene.OnUpdateLis
                 case TRACKING:
                     // Have to switch to UI Thread to update View.
                     view.setVisibility(View.GONE);
-                if (image.getName().equals("halo.jpg")) {
-                    AR_Node node = new AR_Node(this, R.raw.halo);
-                    node.setImage(image);
-                    augmentedImageMap.put(image, node);
-                    arView.getArSceneView().getScene().addChild(node);
-                    show_text();
-                    view.setVisibility(View.INVISIBLE);
-                } else if (image.getName().equals("ball.jpg")) {
-                    AR_Node node = new AR_Node(this, R.raw.ball);
-                    node.setImage(image);
-                    augmentedImageMap.put(image, node);
-                    arView.getArSceneView().getScene().addChild(node);
-                    show_text();
-                    view.setVisibility(View.INVISIBLE);
-                }
+                    if (image.getName().equals("halo.jpg")) {
+                        AR_Node node = new AR_Node(this, R.raw.halo);
+                        node.setImage(image);
+                        augmentedImageMap.put(image, node);
+                        arView.getArSceneView().getScene().addChild(node);
+                        //show_text();
+                        view.setVisibility(View.INVISIBLE);
+                        Delete.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (node != null) {
+                                    arView.getArSceneView().getScene().removeChild(node);
+                                    node.getAnchor().detach();
+                                    node.setParent(null);
+                                    augmentedImageMap.remove(image);
+                                }
+                                node.resetModel();
+                                Intent intent = new Intent();
+                                intent.setClass(MainActivity.this, StartActivity.class);
+                                finish();
+                                startActivity(intent);
+                            }
+
+                        });
+                    } else if (image.getName().equals("ball.jpg")) {
+                        AR_Node node = new AR_Node(this, R.raw.ball);
+                        node.setImage(image);
+                        augmentedImageMap.put(image, node);
+                        arView.getArSceneView().getScene().addChild(node);
+                        //show_text();
+                        view.setVisibility(View.INVISIBLE);
+                        Delete.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (node != null) {
+                                    arView.getArSceneView().getScene().removeChild(node);
+                                    node.getAnchor().detach();
+                                    node.setParent(null);
+                                    augmentedImageMap.remove(image);
+                                }
+                                node.resetModel();
+                                Intent intent = new Intent();
+                                intent.setClass(MainActivity.this, StartActivity.class);
+                                finish();
+                                startActivity(intent);
+                            }
+
+                        });
+                    }else if (image.getName().equals("phone.jpg")) {
+                        AR_Node node = new AR_Node(this, R.raw.mobile_phone);
+                        node.setImage(image);
+                        augmentedImageMap.put(image, node);
+                        arView.getArSceneView().getScene().addChild(node);
+                        //show_text();
+                        view.setVisibility(View.INVISIBLE);
+                        Delete.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (node != null) {
+                                    arView.getArSceneView().getScene().removeChild(node);
+                                    node.getAnchor().detach();
+                                    node.setParent(null);
+                                    augmentedImageMap.remove(image);
+                                }
+                                node.resetModel();
+                                Intent intent = new Intent();
+                                intent.setClass(MainActivity.this, StartActivity.class);
+                                finish();
+                                startActivity(intent);
+                            }
+
+                        });
+                    }
+
+
+                break;
                 case STOPPED:
                     augmentedImageMap.remove(image);
                     break;
+
             }
 
 
@@ -223,19 +313,28 @@ public class MainActivity extends AppCompatActivity implements Scene.OnUpdateLis
 
              */
         }
-    }
 
-    private void show_text(){
+
+    }
+/*
+    private void show_text(AnchorNode node, TransformableNode model, String name){
         ViewRenderable.builder()
                 .setView(this, R.layout.show_text)
                 .build()
                 .thenAccept(renderable -> show_name = renderable)
         ;
+        TransformableNode nameView = new TransformableNode(arView.getTransformationSystem());
+        nameView.setLocalPosition(new Vector3(0f,model.getLocalPosition().y+0.5f,0));
+        nameView.setParent(node);
+        nameView.setRenderable(show_name);
+        nameView.select();
 
-
-
+        TextView text_name = (TextView)show_name.getView();
+        text_name.setText(name);
     }
 
+
+ */
 
     @Override
     protected void onResume(){
