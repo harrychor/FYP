@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -22,20 +21,15 @@ import com.google.ar.core.AugmentedImageDatabase;
 import com.google.ar.core.Config;
 import com.google.ar.core.Frame;
 import com.google.ar.core.Session;
-import com.google.ar.core.TrackingState;
 import com.google.ar.core.exceptions.CameraNotAvailableException;
 import com.google.ar.core.exceptions.UnavailableApkTooOldException;
 import com.google.ar.core.exceptions.UnavailableArcoreNotInstalledException;
 import com.google.ar.core.exceptions.UnavailableDeviceNotCompatibleException;
 import com.google.ar.core.exceptions.UnavailableSdkTooOldException;
-import com.google.ar.sceneform.AnchorNode;
-import com.google.ar.sceneform.ArSceneView;
 import com.google.ar.sceneform.FrameTime;
 import com.google.ar.sceneform.Scene;
 import com.google.ar.sceneform.math.Vector3;
-import com.google.ar.sceneform.rendering.ViewRenderable;
 import com.google.ar.sceneform.ux.ArFragment;
-import com.google.ar.sceneform.ux.TransformableNode;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -48,8 +42,6 @@ import java.io.InputStream;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity implements Scene.OnUpdateListener{
     private ArFragment arView;
@@ -274,10 +266,33 @@ public class MainActivity extends AppCompatActivity implements Scene.OnUpdateLis
                             }
 
                         });
+                    }else if (image.getName().equals("car.jpg")) {
+                        AR_Node node = new AR_Node(this, R.raw.audi);
+                        node.setImage(image);
+                        node.setLocalScale(new Vector3(0.1f,0.1f,0.1f));
+                        augmentedImageMap.put(image, node);
+                        arView.getArSceneView().getScene().addChild(node);
+                        //show_text();
+                        view.setVisibility(View.INVISIBLE);
+                        Delete.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (node != null) {
+                                    arView.getArSceneView().getScene().removeChild(node);
+                                    node.getAnchor().detach();
+                                    node.setParent(null);
+                                    augmentedImageMap.remove(image);
+                                }
+                                node.resetModel();
+                                restart();
+                            }
+
+                        });
                     }
 
 
-                break;
+
+                    break;
                 case STOPPED:
                     augmentedImageMap.remove(image);
                     break;

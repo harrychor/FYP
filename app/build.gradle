@@ -65,3 +65,7 @@ sceneform.asset('sampledata/mobile-phone.obj', // 'Source Asset Path' specified 
         'sampledata/mobile-phone.sfa', // '.sfa Output Path' specified during import.
         'src/main/res/raw/mobile_phone')      // '.sfb Output Path' specified during import.
 
+sceneform.asset('sampledata/Audi.obj', // 'Source Asset Path' specified during import.
+        'default',                    // 'Material Path' specified during import.
+        'sampledata/Audi.sfa', // '.sfa Output Path' specified during import.
+        'src/main/res/raw/audi')      // '.sfb Output Path' specified during import.

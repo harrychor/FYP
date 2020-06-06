@@ -13,15 +13,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="892af426-fb25-4278-bd30-858c35ca570a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/sampledata/Audi.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/sampledata/Audi_R8_2017.mtl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/sampledata/bugatti.mtl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/sampledata/bugatti.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/assets/bugatti.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/assets/car.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.6.4/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.6.4/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.6.4/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.6.4/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.6.4/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.6.4/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.6.4/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.6.4/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.6.4/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.6.4/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.6.4/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.6.4/javaCompile/classAnalysis.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.6.4/javaCompile/jarAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.6.4/javaCompile/jarAnalysis.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.6.4/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.6.4/javaCompile/javaCompile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.6.4/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.6.4/javaCompile/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/assets/edmtdev.imgdb" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/assets/edmtdev.imgdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/ar_test_01/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/ar_test_01/MainActivity.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -62,7 +75,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/main/res/drawable" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/src/main/assets" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../sceneform-android-sdk-1.15.0/samples/augmentedimage" />
     <property name="project.structure.last.edited" value="Build Variants" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -72,12 +85,6 @@
     <option name="LAST_EDITED_BUILD_TYPE" value="release" />
   </component>
   <component name="RecentsManager">
-    <key name="android.template.packageName">
-      <recent name="com.example.ar_test_01" />
-    </key>
-    <key name="CreateClassDialog.RecentsKey">
-      <recent name="com.example.ar_test_01" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Harry\Documents\shape\FYP\AR\FYP\app\src\main\assets" />
       <recent name="C:\Users\Harry\Documents\shape\FYP\AR\FYP\app\sampledata" />
@@ -89,6 +96,12 @@
       <recent name="C:\Users\Harry\Documents\shape\FYP\AR\FYP\app\src\main\res\drawable" />
       <recent name="C:\Users\Harry\Documents\shape\FYP\AR\FYP\app\sampledata" />
       <recent name="C:\Users\Harry\Documents\shape\FYP\AR_Test\app\sampledata" />
+    </key>
+    <key name="android.template.packageName">
+      <recent name="com.example.ar_test_01" />
+    </key>
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.example.ar_test_01" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -209,7 +222,14 @@
       <option name="project" value="LOCAL" />
       <updated>1590590361532</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="final fix">
+      <created>1590649842615</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1590649842615</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -231,6 +251,7 @@
     <MESSAGE value="change to AR Fragment" />
     <MESSAGE value="add starting page" />
     <MESSAGE value="bug fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="bug fix" />
+    <MESSAGE value="final fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="final fix" />
   </component>
 </project>

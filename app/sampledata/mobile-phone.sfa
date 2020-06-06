@@ -1,0 +1,53 @@
+{
+  materials: [
+    {
+      name: 'Phone',
+      parameters: [
+        {
+          baseColor: 'phone',
+        },
+        {
+          baseColorTint: [
+            0.58799999999999997,
+            0.58799999999999997,
+            0.58799999999999997,
+            1,
+          ],
+        },
+        {
+          metallic: 1,
+        },
+        {
+          roughness: 0.408248,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/obj_material.sfm',
+    },
+  ],
+  model: {
+    attributes: [
+      'Position',
+      'TexCoord',
+      'Orientation',
+    ],
+    collision: {},
+    file: 'sampledata/mobile-phone.obj',
+    name: 'mobile-phone',
+    recenter: 'root',
+    scale: 0.66622300000000001,
+  },
+  samplers: [
+    {
+      file: 'sampledata\\VirtualSpeech\\App\\Unity\\VS_gvr_v35_backup\\Assets\\misc\\Conference Room\\Textures\\phone.png',
+      name: 'phone',
+      params: {
+        usage_type: 'Data',
+      },
+      pipeline_name: 'D:\\VirtualSpeech\\App\\Unity\\VS_gvr_v35_backup\\Assets\\misc\\Conference Room\\Textures\\phone.png',
+    },
+  ],
+  version: '0.54:2',
+}
